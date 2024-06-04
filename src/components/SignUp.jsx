@@ -9,7 +9,6 @@ const SignUp = () => {
           <label htmlFor='name'>Name</label>
           <input className="form-control mb-3" type='text' id='name' name='name' />
         </form>
-
         <form className="row g-3">
           <div className="col-md-6">
             <label htmlFor="inputEmail4" className="form-label">Email</label>
@@ -46,6 +45,7 @@ const SignUp = () => {
             <button type="submit" className="btn btn-primary">Sign in</button>
           </div>
         </form>
+        <p>Already have an account? <a href="/login">Login</a></p>
       </div>
     </div>
   );
