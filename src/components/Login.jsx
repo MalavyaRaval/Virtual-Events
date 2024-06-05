@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../CSS/Login.css';
+import Navbar from './Nav/Navbar';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -12,7 +13,8 @@ const Login = () => {
   };
 
   return (
-    <div className="full-height">
+    <> <Navbar /> 
+    <div className="full-height"> 
       <div className="form-container">
         <h2>Login Page</h2>
         <form className="row g-3" onSubmit={handleSubmit}>
@@ -30,6 +32,7 @@ const Login = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 

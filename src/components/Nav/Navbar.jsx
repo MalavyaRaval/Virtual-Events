@@ -1,26 +1,25 @@
 import React, { useState } from 'react';
-import '../../CSS/navbar.css';
+import '../../CSS/navbar.css'; // Import the CSS file
 
 const Navbar = () => {
-
-    const [burger_class, setBurgerClass] = useState("burger-bar unclicked")
-    const [menu_class, setMenuClass] = useState("menu hidden")
-    const [isMenuClicked, setIsMenuClicked] = useState(false)
+    const [burger_class, setBurgerClass] = useState("burger-bar unclicked");
+    const [menu_class, setMenuClass] = useState("menu hidden");
+    const [isMenuClicked, setIsMenuClicked] = useState(false);
 
     const updateMenu = () => {
         if (!isMenuClicked) {
-            setBurgerClass("burger-bar clicked")
-            setMenuClass("menu visible")
+            setBurgerClass("burger-bar clicked");
+            setMenuClass("menu visible");
         } else {
-            setBurgerClass("burger-bar unclicked")
-            setMenuClass("menu hidden")
+            setBurgerClass("burger-bar unclicked");
+            setMenuClass("menu hidden");
         }
 
-        setIsMenuClicked(!isMenuClicked)
-    }
+        setIsMenuClicked(!isMenuClicked);
+    };
 
     return (
-        <div style={{ width: '100%', height: '100vh' }}>
+        <div className="navbar-container">
             <nav>
                 <div className="burger-menu" onClick={updateMenu}>
                     <div className={burger_class}></div>
@@ -39,8 +38,10 @@ const Navbar = () => {
                     <li><a href="/my-profile">My Profile</a></li>
                 </ul>
             </div>
+
+
         </div>
-    )
-}
+    );
+};
 
 export default Navbar;

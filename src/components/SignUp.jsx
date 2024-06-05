@@ -1,6 +1,7 @@
 import React from 'react';
 import '../CSS/SignUp.css';
 import { useNavigate } from 'react-router-dom';
+import Navbar from './Nav/Navbar';
 
 const states = [
   'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 
@@ -20,7 +21,8 @@ const SignUp = () => {
   };
 
   return (
-    <div className="full-height">
+    <> <Navbar />
+    <div className="full-height"> 
       <div className="form-container">
         <form className='mb-3' onSubmit={handleSubmit}>
           <label htmlFor='name'>Name</label>
@@ -66,7 +68,9 @@ const SignUp = () => {
         </form>
         <p>Already have an account? <a href="/login">Login</a></p>
       </div>
+   
     </div>
+    </>
   );
 }
 
