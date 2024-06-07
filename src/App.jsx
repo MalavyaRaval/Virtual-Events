@@ -5,6 +5,7 @@ import Login from './components/Login.jsx';
 import Home from './components/Home.jsx';
 import AboutUs from './components/aboutus.jsx';
 import Recordings from './components/Recordings.jsx';
+import Intro from './components/Intro.jsx';
 
 const App = () => {
   return (
@@ -15,7 +16,7 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/recordings" element={<Recordings />} />
-        <Route path="/" element={<SignUp />} />
+        <Route path="/" element={<Intro />} />
       </Routes>
     </Router>
   );

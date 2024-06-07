@@ -91,9 +91,9 @@ nav {
 
 .create-event-button {
   position: fixed;
-  bottom: 120px; /* Adjusted to ensure visibility above the footer */
-  left: 40px; /* Adjusted to be at the right side */
-  background-color: #007bff; /* Bootstrap primary color */
+  bottom: 120px;
+  left: 40px;
+  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 50%;
