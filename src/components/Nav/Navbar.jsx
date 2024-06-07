@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../CSS/navbar.css'; // Import the CSS file
+import '../../CSS/navbar.css';
 
 const Navbar = () => {
     const [burger_class, setBurgerClass] = useState("burger-bar unclicked");
@@ -34,7 +34,7 @@ const Navbar = () => {
                     <li><a href="/login">Login</a></li>
                     <li><a href="/signup">Sign Up</a></li>
                     <li><a href="/recordings">Recordings</a></li>
-                    <li><a href="/about-us">About Us</a></li>
+                    <li><a href="/aboutus">About Us</a></li>
                     <li><a href="/my-profile">My Profile</a></li>
                 </ul>
             </div>
