@@ -16,3 +16,21 @@
 .btn-link button {
   color: white; /* Set the button text color to white */
 }
+
+.footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 1rem 0;
+  position: relative;
+  width: 100%;
+}
+
+.footer-content p {
+  margin: 0.5rem 0;
+}
+
+.trademark {
+  font-size: 0.8rem;
+  vertical-align: super;
+}
