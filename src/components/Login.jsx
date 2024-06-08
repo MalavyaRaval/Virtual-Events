@@ -9,32 +9,33 @@ const Login = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     navigate('/home');
   };
 
   return (
-    <> <Navbar /> 
-    <div className="full-height"> 
-      <div className="form-container">
-        <h2>Login Page</h2>
-        <form className="row g-3" onSubmit={handleSubmit}>
-          <div className="col-md-12 mb-3">
-            <label htmlFor="inputEmail" className="form-label">Email</label>
-            <input type="email" className="form-control" id="inputEmail" />
+    <>
+      <Navbar />
+      <div className="page-container">
+        <div className="content-wrap">
+          <div className="form-container">
+            <h2>Login Page</h2>
+            <form className="row g-3" onSubmit={handleSubmit}>
+              <div className="col-md-12 mb-3">
+                <label htmlFor="inputEmail" className="form-label">Email</label>
+                <input type="email" className="form-control" id="inputEmail" />
+              </div>
+              <div className="col-md-12 mb-3">
+                <label htmlFor="inputPassword" className="form-label">Password</label>
+                <input type="password" className="form-control" id="inputPassword" />
+              </div>
+              <div className="col-12">
+                <button type="submit" className="btn btn-primary">Login</button>
+              </div>
+            </form>
           </div>
-          <div className="col-md-12 mb-3">
-            <label htmlFor="inputPassword" className="form-label">Password</label>
-            <input type="password" className="form-control" id="inputPassword" />
-          </div>
-          <div className="col-12">
-            <button type="submit" className="btn btn-primary">Login</button>
-          </div>
-        </form>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
-   
     </>
   );
 };
