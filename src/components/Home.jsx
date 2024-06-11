@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from './Nav/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
@@ -6,6 +6,44 @@ import '../CSS/navbar.css'; // Import the CSS file
 import Footer from './Footer';
 
 const Home = () => {
+  const [events, setEvents] = useState([]);
+  const [eventDetails, setEventDetails] = useState({
+    name: '',
+    date: '',
+    time: '',
+    sponsor: '',
+    coSponsor: '',
+    security: '',
+    food: '',
+    custodian: '',
+    description: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEventDetails({
+      ...eventDetails,
+      [name]: value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setEvents([...events, eventDetails]);
+    setEventDetails({
+      name: '',
+      date: '',
+      time: '',
+      sponsor: '',
+      coSponsor: '',
+      security: '',
+      food: '',
+      custodian: '',
+      description: ''
+    });
+    document.querySelector('[data-bs-dismiss="modal"]').click(); // Close the modal
+  };
+
   return (
     <div className="page-container">
       <Navbar />
@@ -27,42 +65,42 @@ const Home = () => {
                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div className="modal-body">
-                <form>
+                <form onSubmit={handleSubmit}>
                   <label>
                     Event Name:
-                    <input type="text" name="name" className="form-control" />
+                    <input type="text" name="name" className="form-control" value={eventDetails.name} onChange={handleChange} required />
                   </label>
                   <label>
                     Date:
-                    <input type="date" name="date" className="form-control" />
+                    <input type="date" name="date" className="form-control" value={eventDetails.date} onChange={handleChange} required />
                   </label>
                   <label>
                     Time:
-                    <input type="time" name="time" className="form-control" />
+                    <input type="time" name="time" className="form-control" value={eventDetails.time} onChange={handleChange} required />
                   </label>
                   <label>
                     Sponsor:
-                    <input type="text" name="sponsor" className="form-control" />
+                    <input type="text" name="sponsor" className="form-control" value={eventDetails.sponsor} onChange={handleChange} required />
                   </label>
                   <label>
                     Co-Sponsor:
-                    <input type="text" name="co-sponsor" className="form-control" />
+                    <input type="text" name="coSponsor" className="form-control" value={eventDetails.coSponsor} onChange={handleChange} />
                   </label>
                   <label>
                     Security:
-                    <input type="text" name="security" className="form-control" />
+                    <input type="text" name="security" className="form-control" value={eventDetails.security} onChange={handleChange} />
                   </label>
                   <label>
                     Food:
-                    <input type="text" name="food" className="form-control" />
+                    <input type="text" name="food" className="form-control" value={eventDetails.food} onChange={handleChange} />
                   </label>
                   <label>
                     Custodian:
-                    <input type="text" name="custodian" className="form-control" />
+                    <input type="text" name="custodian" className="form-control" value={eventDetails.custodian} onChange={handleChange} />
                   </label>
                   <label>
                     Description:
-                    <textarea name="description" className="form-control"></textarea>
+                    <textarea name="description" className="form-control" value={eventDetails.description} onChange={handleChange} required></textarea>
                   </label>
                   <button type="submit" className="btn btn-primary mt-3">Submit</button>
                 </form>
@@ -72,6 +110,22 @@ const Home = () => {
               </div>
             </div>
           </div>
+        </div>
+
+        <div className="events-list mt-4">
+          {events.map((event, index) => (
+            <div key={index} className="event-box p-3 mb-3 border rounded">
+              <h5>{event.name}</h5>
+              <p><strong>Date:</strong> {event.date}</p>
+              <p><strong>Time:</strong> {event.time}</p>
+              <p><strong>Sponsor:</strong> {event.sponsor}</p>
+              <p><strong>Co-Sponsor:</strong> {event.coSponsor}</p>
+              <p><strong>Security:</strong> {event.security}</p>
+              <p><strong>Food:</strong> {event.food}</p>
+              <p><strong>Custodian:</strong> {event.custodian}</p>
+              <p><strong>Description:</strong> {event.description}</p>
+            </div>
+          ))}
         </div>
       </div>
       <Footer />
