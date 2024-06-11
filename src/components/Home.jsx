@@ -18,6 +18,7 @@ const Home = () => {
     custodian: '',
     description: ''
   });
+  const [expandedEventIndex, setExpandedEventIndex] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,6 +43,10 @@ const Home = () => {
       description: ''
     });
     document.querySelector('[data-bs-dismiss="modal"]').click(); // Close the modal
+  };
+
+  const toggleDetails = (index) => {
+    setExpandedEventIndex(expandedEventIndex === index ? null : index);
   };
 
   return (
@@ -116,14 +121,22 @@ const Home = () => {
           {events.map((event, index) => (
             <div key={index} className="event-box p-3 mb-3 border rounded">
               <h5>{event.name}</h5>
-              <p><strong>Date:</strong> {event.date}</p>
-              <p><strong>Time:</strong> {event.time}</p>
-              <p><strong>Sponsor:</strong> {event.sponsor}</p>
-              <p><strong>Co-Sponsor:</strong> {event.coSponsor}</p>
-              <p><strong>Security:</strong> {event.security}</p>
-              <p><strong>Food:</strong> {event.food}</p>
-              <p><strong>Custodian:</strong> {event.custodian}</p>
-              <p><strong>Description:</strong> {event.description}</p>
+              <button onClick={() => toggleDetails(index)} className="btn btn-link">
+                {expandedEventIndex === index ? 'Hide Details' : 'Show Details'}
+              </button>
+              <button>Live Stream</button>
+              {expandedEventIndex === index && (
+                <div>
+                  <p><strong>Date:</strong> {event.date}</p>
+                  <p><strong>Time:</strong> {event.time}</p>
+                  <p><strong>Sponsor:</strong> {event.sponsor}</p>
+                  <p><strong>Co-Sponsor:</strong> {event.coSponsor}</p>
+                  <p><strong>Security:</strong> {event.security}</p>
+                  <p><strong>Food:</strong> {event.food}</p>
+                  <p><strong>Custodian:</strong> {event.custodian}</p>
+                  <p><strong>Description:</strong> {event.description}</p>
+                </div>
+              )}
             </div>
           ))}
         </div>

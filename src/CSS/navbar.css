@@ -90,20 +90,7 @@ nav {
 }
 
 .create-event-button {
-  position: fixed;
-  bottom: 120px;
-  left: 40px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 30px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin-bottom: 20px;
 }
 
 .modal-content h5 {
@@ -118,10 +105,7 @@ nav {
 
 .content-wrap {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  padding: 20px;
 }
 
 .footer {
@@ -140,4 +124,24 @@ nav {
 .trademark {
   font-size: 0.8rem;
   vertical-align: super;
+}
+
+.events-list {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap; /* Enable wrapping */
+  gap: 10px; /* Add some space between event boxes */
+}
+
+.event-box {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 5px;
+  flex: 0 1 calc(33.333% - 20px); /* Adjust width and maintain spacing */
+  box-sizing: border-box;
+}
+
+.event-box h5 {
+  margin-top: 0;
 }
