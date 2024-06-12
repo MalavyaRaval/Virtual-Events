@@ -13,7 +13,15 @@ const Camera = () => {
   const [recordingUrl, setRecordingUrl] = useState('');
 
   const startStreaming = () => {
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+    const constraints = {
+      video: true,
+      audio: {
+        echoCancellation: true,
+        noiseSuppression: true,
+      },
+    };
+
+    navigator.mediaDevices.getUserMedia(constraints)
       .then((mediaStream) => {
         videoRef.current.srcObject = mediaStream;
         setStream(mediaStream);
@@ -30,6 +38,7 @@ const Camera = () => {
       })
       .catch((err) => {
         console.error("Error accessing the camera and microphone: ", err);
+        alert('Please allow access to the camera and microphone.');
       });
   };
 
