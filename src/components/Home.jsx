@@ -1,4 +1,3 @@
-// Home.js
 import React, { useState } from 'react';
 import { FaVideo } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -22,6 +21,10 @@ const Home = () => {
     description: ''
   });
 
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [showModal, setShowModal] = useState(false); // State for modal visibility
+  const [error, setError] = useState(''); // State for error message
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEventDetails({
@@ -32,25 +35,40 @@ const Home = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setEvents([...events, { ...eventDetails, isExpanded: false }]);
-    setEventDetails({
-      name: '',
-      date: '',
-      time: '',
-      sponsor: '',
-      coSponsor: '',
-      security: '',
-      food: '',
-      custodian: '',
-      description: ''
-    });
-    document.querySelector('[data-bs-dismiss="modal"]').click(); // Close the modal
+    const currentDate = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
+    if (eventDetails.date < currentDate) {
+      setError('Event date cannot be in the past. Please select a future date.');
+      return;
+    }
+
+    const conflictEvent = events.find(event => event.date === eventDetails.date && event.time === eventDetails.time);
+    if (conflictEvent) {
+      alert(`Event "${conflictEvent.name}" is already scheduled at this time. Please choose another time.`);
+    } else {
+      setEvents([...events, { ...eventDetails, isExpanded: false }]);
+      setEventDetails({
+        name: '',
+        date: '',
+        time: '',
+        sponsor: '',
+        coSponsor: '',
+        security: '',
+        food: '',
+        custodian: '',
+        description: ''
+      });
+      setError('');
+      document.querySelector('[data-bs-dismiss="modal"]').click(); // Close the modal
+    }
   };
 
-  const toggleDetails = (index) => {
-    setEvents(events.map((event, i) => (
-      i === index ? { ...event, isExpanded: !event.isExpanded } : event
-    )));
+  const showDetails = (event) => {
+    setSelectedEvent(event);
+    setShowModal(true); // Show the modal
+  };
+
+  const closeModal = () => {
+    setShowModal(false); // Hide the modal
   };
 
   return (
@@ -74,6 +92,7 @@ const Home = () => {
                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div className="modal-body">
+                {error && <div className="alert alert-danger">{error}</div>}
                 <form onSubmit={handleSubmit}>
                   <label>
                     Event Name:
@@ -125,28 +144,45 @@ const Home = () => {
           {events.map((event, index) => (
             <div key={index} className="event-box p-3 mb-3 border rounded">
               <h5>{event.name}</h5>
-              <button onClick={() => toggleDetails(index)} className="btn btn-link">
-                {event.isExpanded ? 'Hide Details' : 'Show Details'}
+              <button onClick={() => showDetails(event)} className="btn btn-link">
+                Show Details
               </button>
               <Link to="/camera" className="btn btn-link">
                 <FaVideo size={20} />
               </Link>
-              {event.isExpanded && (
-                <div className="event-details">
-                  <p><strong>Date:</strong> {event.date}</p>
-                  <p><strong>Time:</strong> {event.time}</p>
-                  <p><strong>Sponsor:</strong> {event.sponsor}</p>
-                  <p><strong>Co-Sponsor:</strong> {event.coSponsor}</p>
-                  <p><strong>Security:</strong> {event.security}</p>
-                  <p><strong>Food:</strong> {event.food}</p>
-                  <p><strong>Custodian:</strong> {event.custodian}</p>
-                  <p><strong>Description:</strong> {event.description}</p>
-                </div>
-              )}
             </div>
           ))}
         </div>
       </div>
+
+      {selectedEvent && (
+        <div className={`modal fade ${showModal ? 'show d-block' : ''}`} id="eventDetailsModal" tabIndex="-1" aria-labelledby="eventDetailsModalLabel" aria-hidden={!showModal}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="eventDetailsModalLabel">{selectedEvent.name}</h5>
+              </div>
+              <div className="modal-body">
+                <p><strong>Date:</strong> {selectedEvent.date}</p>
+                <p><strong>Time:</strong> {selectedEvent.time}</p>
+                <p><strong>Sponsor:</strong> {selectedEvent.sponsor}</p>
+                <p><strong>Co-Sponsor:</strong> {selectedEvent.coSponsor}</p>
+                <p><strong>Security:</strong> {selectedEvent.security}</p>
+                <p><strong>Food:</strong> {selectedEvent.food}</p>
+                <p><strong>Custodian:</strong> {selectedEvent.custodian}</p>
+                <p><strong>Description:</strong> {selectedEvent.description}</p>
+                <Link to="/camera" className="btn btn-primary mt-3">
+                  <FaVideo size={20} /> Livestream
+                </Link>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" onClick={closeModal}>Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Footer />
     </div>
   );

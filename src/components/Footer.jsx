@@ -9,7 +9,7 @@ const Footer = () => {
           &copy; {new Date().getFullYear()} Dev Modi & Malavya Raval. All rights reserved.
         </p>
         <p>
-          <span className="trademark">™</span> Dev and Malavya Projects
+          <span className="trademark ">™</span> Dev and Malavya Projects
         </p>
       </div>
     </footer>
