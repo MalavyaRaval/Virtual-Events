@@ -130,7 +130,7 @@ nav {
   margin-top: 20px;
   display: flex;
   flex-wrap: wrap; /* Enable wrapping */
-  gap: 10px; /* Add some space between event boxes */
+  gap: 20px; /* Add some space between event boxes */
 }
 
 .event-box {
@@ -144,4 +144,8 @@ nav {
 
 .event-box h5 {
   margin-top: 0;
+}
+
+.event-details {
+  margin-top: 10px; /* Add margin to details */
 }

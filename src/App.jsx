@@ -6,6 +6,7 @@ import Home from './components/Home.jsx';
 import AboutUs from './components/aboutus.jsx';
 import Recordings from './components/Recordings.jsx';
 import Intro from './components/Intro.jsx';
+import Camera from './components/Camera.jsx';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/recordings" element={<Recordings />} />
+        <Route path="/camera" element={<Camera />} /> {/* Add the new route */}
         <Route path="/" element={<Intro />} />
       </Routes>
     </Router>

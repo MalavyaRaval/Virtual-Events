@@ -1,4 +1,7 @@
+// Home.js
 import React, { useState } from 'react';
+import { FaVideo } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import Navbar from './Nav/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
@@ -18,7 +21,6 @@ const Home = () => {
     custodian: '',
     description: ''
   });
-  const [expandedEventIndex, setExpandedEventIndex] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,7 +32,7 @@ const Home = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setEvents([...events, eventDetails]);
+    setEvents([...events, { ...eventDetails, isExpanded: false }]);
     setEventDetails({
       name: '',
       date: '',
@@ -46,7 +48,9 @@ const Home = () => {
   };
 
   const toggleDetails = (index) => {
-    setExpandedEventIndex(expandedEventIndex === index ? null : index);
+    setEvents(events.map((event, i) => (
+      i === index ? { ...event, isExpanded: !event.isExpanded } : event
+    )));
   };
 
   return (
@@ -122,11 +126,13 @@ const Home = () => {
             <div key={index} className="event-box p-3 mb-3 border rounded">
               <h5>{event.name}</h5>
               <button onClick={() => toggleDetails(index)} className="btn btn-link">
-                {expandedEventIndex === index ? 'Hide Details' : 'Show Details'}
+                {event.isExpanded ? 'Hide Details' : 'Show Details'}
               </button>
-              <button>Live Stream</button>
-              {expandedEventIndex === index && (
-                <div>
+              <Link to="/camera" className="btn btn-link">
+                <FaVideo size={20} />
+              </Link>
+              {event.isExpanded && (
+                <div className="event-details">
                   <p><strong>Date:</strong> {event.date}</p>
                   <p><strong>Time:</strong> {event.time}</p>
                   <p><strong>Sponsor:</strong> {event.sponsor}</p>
