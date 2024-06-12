@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import '../CSS/navbar.css'; // Import the CSS file
 import Footer from './Footer';
+import defaultImage from '../images/symbol.jpg'; // Import the default image
 
 const Home = () => {
   const [events, setEvents] = useState([]);
@@ -18,7 +19,8 @@ const Home = () => {
     security: '',
     food: '',
     custodian: '',
-    description: ''
+    description: '',
+    image: null // Add image to event details
   });
 
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -30,6 +32,13 @@ const Home = () => {
     setEventDetails({
       ...eventDetails,
       [name]: value
+    });
+  };
+
+  const handleImageChange = (e) => {
+    setEventDetails({
+      ...eventDetails,
+      image: e.target.files[0] // Set the selected image file
     });
   };
 
@@ -55,7 +64,8 @@ const Home = () => {
         security: '',
         food: '',
         custodian: '',
-        description: ''
+        description: '',
+        image: null // Reset the image field
       });
       setError('');
       document.querySelector('[data-bs-dismiss="modal"]').click(); // Close the modal
@@ -94,42 +104,48 @@ const Home = () => {
               <div className="modal-body">
                 {error && <div className="alert alert-danger">{error}</div>}
                 <form onSubmit={handleSubmit}>
-                  <label>
-                    Event Name:
-                    <input type="text" name="name" className="form-control" value={eventDetails.name} onChange={handleChange} required />
-                  </label>
-                  <label>
-                    Date:
-                    <input type="date" name="date" className="form-control" value={eventDetails.date} onChange={handleChange} required />
-                  </label>
-                  <label>
-                    Time:
-                    <input type="time" name="time" className="form-control" value={eventDetails.time} onChange={handleChange} required />
-                  </label>
-                  <label>
-                    Sponsor:
-                    <input type="text" name="sponsor" className="form-control" value={eventDetails.sponsor} onChange={handleChange} required />
-                  </label>
-                  <label>
-                    Co-Sponsor:
-                    <input type="text" name="coSponsor" className="form-control" value={eventDetails.coSponsor} onChange={handleChange} />
-                  </label>
-                  <label>
-                    Security:
-                    <input type="text" name="security" className="form-control" value={eventDetails.security} onChange={handleChange} />
-                  </label>
-                  <label>
-                    Food:
-                    <input type="text" name="food" className="form-control" value={eventDetails.food} onChange={handleChange} />
-                  </label>
-                  <label>
-                    Custodian:
-                    <input type="text" name="custodian" className="form-control" value={eventDetails.custodian} onChange={handleChange} />
-                  </label>
-                  <label>
-                    Description:
-                    <textarea name="description" className="form-control" value={eventDetails.description} onChange={handleChange} required></textarea>
-                  </label>
+                  <div className="form-fields">
+                    <label>
+                      Event Name:
+                      <input type="text" name="name" className="form-control" value={eventDetails.name} onChange={handleChange} required />
+                    </label>
+                    <label>
+                      Date:
+                      <input type="date" name="date" className="form-control" value={eventDetails.date} onChange={handleChange} required />
+                    </label>
+                    <label>
+                      Time:
+                      <input type="time" name="time" className="form-control" value={eventDetails.time} onChange={handleChange} required />
+                    </label>
+                    <label>
+                      Sponsor:
+                      <input type="text" name="sponsor" className="form-control" value={eventDetails.sponsor} onChange={handleChange} required />
+                    </label>
+                    <label>
+                      Co-Sponsor:
+                      <input type="text" name="coSponsor" className="form-control" value={eventDetails.coSponsor} onChange={handleChange} />
+                    </label>
+                    <label>
+                      Security:
+                      <input type="text" name="security" className="form-control" value={eventDetails.security} onChange={handleChange} />
+                    </label>
+                    <label>
+                      Food:
+                      <input type="text" name="food" className="form-control" value={eventDetails.food} onChange={handleChange} />
+                    </label>
+                    <label>
+                      Custodian:
+                      <input type="text" name="custodian" className="form-control" value={eventDetails.custodian} onChange={handleChange} />
+                    </label>
+                    <label>
+                      Description:
+                      <textarea name="description" className="form-control" value={eventDetails.description} onChange={handleChange} required></textarea>
+                    </label>
+                    <label>
+                      Image:
+                      <input type="file" name="image" className="form-control" onChange={handleImageChange} accept="image/*" />
+                    </label>
+                  </div>
                   <button type="submit" className="btn btn-primary mt-3">Submit</button>
                 </form>
               </div>
@@ -143,13 +159,22 @@ const Home = () => {
         <div className="events-list mt-4">
           {events.map((event, index) => (
             <div key={index} className="event-box p-3 mb-3 border rounded">
-              <h5>{event.name}</h5>
+              <div className="image-container">
+                <img
+                  src={event.image ? URL.createObjectURL(event.image) : defaultImage}
+                  alt="Event"
+                  className="img-fluid event-image"
+                />
+              </div>
+              <h5 className="event-name">{event.name}</h5>
               <button onClick={() => showDetails(event)} className="btn btn-link">
                 Show Details
               </button>
-              <Link to="/camera" className="btn btn-link">
-                <FaVideo size={20} />
-              </Link>
+              <div className="livestream-container">
+                <Link to="/camera" className="btn btn-link livestream-icon">
+                  <FaVideo size={20} />
+                </Link>
+              </div>
             </div>
           ))}
         </div>
@@ -171,6 +196,13 @@ const Home = () => {
                 <p><strong>Food:</strong> {selectedEvent.food}</p>
                 <p><strong>Custodian:</strong> {selectedEvent.custodian}</p>
                 <p><strong>Description:</strong> {selectedEvent.description}</p>
+                <div className="modal-image-container">
+                  <img
+                    src={selectedEvent.image ? URL.createObjectURL(selectedEvent.image) : defaultImage}
+                    alt="Event"
+                    className="img-fluid modal-event-image"
+                  />
+                </div>
                 <Link to="/camera" className="btn btn-primary mt-3">
                   <FaVideo size={20} /> Livestream
                 </Link>
