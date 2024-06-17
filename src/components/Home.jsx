@@ -81,18 +81,26 @@ const Home = () => {
     setShowModal(false); // Hide the modal
   };
 
+  const handleDelete = (index) => {
+    if (window.confirm('Are you sure you want to delete this event?')) {
+      setEvents(events.filter((_, i) => i !== index));
+    }
+  };
+
   return (
     <div className="page-container">
       <Navbar />
       <div className="content-wrap">
-        <button
-          type="button"
-          className="btn btn-primary create-event-button"
-          data-bs-toggle="modal"
-          data-bs-target="#createEventModal"
-        >
-          +
-        </button>
+        <div className="d-flex justify-content-between">
+          <button
+            type="button"
+            className="btn btn-primary create-event-button"
+            data-bs-toggle="modal"
+            data-bs-target="#createEventModal"
+          >
+            +
+          </button>
+        </div>
 
         <div className="modal fade" id="createEventModal" tabIndex="-1" aria-labelledby="createEventModalLabel" aria-hidden="true">
           <div className="modal-dialog">
@@ -169,6 +177,9 @@ const Home = () => {
               <h5 className="event-name">{event.name}</h5>
               <button onClick={() => showDetails(event)} className="btn btn-link">
                 Show Details
+              </button>
+              <button onClick={() => handleDelete(index)} className="btn btn-danger">
+                Delete
               </button>
               <div className="livestream-container">
                 <Link to="/camera" className="btn btn-link livestream-icon">
