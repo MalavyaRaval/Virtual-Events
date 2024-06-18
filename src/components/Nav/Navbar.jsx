@@ -1,3 +1,4 @@
+// Navbar.jsx
 import React, { useState } from 'react';
 import '../../CSS/navbar.css';
 
@@ -35,11 +36,9 @@ const Navbar = () => {
                     <li><a href="/signup">Sign Up</a></li>
                     <li><a href="/recordings">Recordings</a></li>
                     <li><a href="/aboutus">About Us</a></li>
-                    <li><a href="/my-profile">My Profile</a></li>
+                    <li><a href="/myprofile">My Profile</a></li>
                 </ul>
             </div>
-
-
         </div>
     );
 };
