@@ -10,7 +10,6 @@ const Camera = () => {
   const [stream, setStream] = useState(null);
   const [mediaRecorder, setMediaRecorder] = useState(null);
   const [recordedChunks, setRecordedChunks] = useState([]);
-  const [recordingUrl, setRecordingUrl] = useState('');
 
   const startStreaming = () => {
     const constraints = {
@@ -59,8 +58,20 @@ const Camera = () => {
   useEffect(() => {
     if (recordedChunks.length > 0) {
       const blob = new Blob(recordedChunks, { type: 'video/webm' });
-      const url = URL.createObjectURL(blob);
-      setRecordingUrl(url);
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = () => {
+        const base64data = reader.result;
+        const recording = {
+          id: Date.now(),
+          name: `Recording ${Date.now()}`,
+          date: new Date().toLocaleString(),
+          data: base64data,
+        };
+        const savedRecordings = JSON.parse(localStorage.getItem('recordings')) || [];
+        savedRecordings.push(recording);
+        localStorage.setItem('recordings', JSON.stringify(savedRecordings));
+      };
       setRecordedChunks([]);
     }
   }, [recordedChunks]);
@@ -87,11 +98,6 @@ const Camera = () => {
             <button onClick={stopStreaming} className="camera-button">Stop Livestreaming</button>
           )}
         </div>
-        {recordingUrl && (
-          <div className="recording-link">
-            <a href={recordingUrl} download="recording.webm">Download Recording</a>
-          </div>
-        )}
       </div>
     </>
   );
