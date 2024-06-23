@@ -20,12 +20,12 @@ const Home = () => {
     food: '',
     custodian: '',
     description: '',
-    image: null // Add image to event details
+    image: null
   });
 
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [showModal, setShowModal] = useState(false); // State for modal visibility
-  const [error, setError] = useState(''); // State for error message
+  const [showModal, setShowModal] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -65,20 +65,20 @@ const Home = () => {
         food: '',
         custodian: '',
         description: '',
-        image: null // Reset the image field
+        image: null 
       });
       setError('');
-      document.querySelector('[data-bs-dismiss="modal"]').click(); // Close the modal
+      document.querySelector('[data-bs-dismiss="modal"]').click(); 
     }
   };
 
   const showDetails = (event) => {
     setSelectedEvent(event);
-    setShowModal(true); // Show the modal
+    setShowModal(true); 
   };
 
   const closeModal = () => {
-    setShowModal(false); // Hide the modal
+    setShowModal(false); 
   };
 
   const handleDelete = (index) => {
